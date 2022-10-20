@@ -28,6 +28,26 @@
 ## Задание 1
 ### Реализовать систему машиного обучения в связке Python - Google-Sheets - Unity.
 
+#### Создайте новый пустой 3D проект на Unity.
+![Wdwdna4qrV4](https://user-images.githubusercontent.com/91984484/196927165-0b70f4c1-05d9-49f9-9af2-e720d5f9c1f8.jpg)
+#### Скачайте папку с ML агентом.
+![j8jeco5jWOc](https://user-images.githubusercontent.com/91984484/196927344-71575d2a-ac17-40d2-ab86-96d9192b500a.jpg)
+#### В созданный проект добавьте ML Agent, выбрав Window - Package Manager - Add Package from disk. Последовательно добавьте .json – файлы
+![e_-dwb9fMtE](https://user-images.githubusercontent.com/91984484/196927460-cfeea5b3-4f6e-40df-929e-457d70e71931.jpg)
+#### Далее пишем серию команд для создания и активации нового ML-агента, а также для скачивания необходимых библиотек
+![mZjgYu5nVNE](https://user-images.githubusercontent.com/91984484/196927556-37e9139c-3cab-4750-a733-b4f0338c0a71.jpg)
+#### Создайте на сцене плоскость, куб и сферу так, как показано на рисунке ниже. Создайте простой C# скрипт-файл и подключите его к сфере
+![FTE00k21PMU](https://user-images.githubusercontent.com/91984484/196927869-b890e77e-de0c-4606-805e-32b5588ffe4a.jpg)
+
+
+![YPxD9qhfU58](https://user-images.githubusercontent.com/91984484/196927919-3cf56faa-027f-4f04-9398-6b6c0a2e147e.jpg)
+#### Объекту «сфера» добавить компоненты Rigidbody, Decision Requester, Behavior Parameters и настройте их так, как показано на рисунке ниже
+![F1aIVI01EqQ](https://user-images.githubusercontent.com/91984484/196928053-9421cea6-8b1a-40f1-a826-21a6fc9d917a.jpg)
+#### Сделайте 3, 9, 27 копий модели «Плоскость-Сфера-Куб», запустите симуляцию сцены и наблюдайте за результатом обучения модели.
+![MBlejfgc8No](https://user-images.githubusercontent.com/91984484/196928438-d1e667d8-0eb4-4a35-b951-1687378628f5.jpg)
+#### После завершения обучения проверьте работу модели.
+![gbK1Q7AxPZc](https://user-images.githubusercontent.com/91984484/196928544-6eea9a18-8088-4320-b2ff-12bbf56cb101.jpg)
+
 ## Задание 2
 ### Реализовать запись в Google-табдицу набора данных, полученных с помощью линейной регрессии из лаб. работы №1.
 
