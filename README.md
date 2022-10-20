@@ -50,9 +50,66 @@
 
 ## Задание 2
 ### Подробно опишите каждую строку файла конфигурации нейронной сети, доступного в папке с файлами проекта по ссылке. Самостоятельно найдите информацию о компонентах Decision Requester, Behavior Parameters, добавленных на сфере.
+```py
+// Подключаем необходимые библиотеки
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
 
+public class RollerAgent : Agent
+{
+    Rigidbody rBody; // создаем переменную типа Rigitbody
+    void Start()
+    {
+        rBody = GetComponent<Rigidbody>();  // присваеваем значение фактического компонента, обеспечивающего физическое взаимодействие между объектами
+    // Start вызывается перед первым обновлением кадра
+    }
 
+    public Transform Target; // создаем объект куб
+    public override void OnEpisodeBegin()
+    {
+        if (this.transform.localPosition.y < 0) // если координата y объекта меньше 0, то
+        {
+            this.rBody.angularVelocity = Vector3.zero; //задаем скорость поворота
+            this.rBody.velocity = Vector3.zero; // задаем направление движения тела
+            this.transform.localPosition = new Vector3(0, 0.5f, 0); // задаем координаты объекта
+        }
 
+        Target.localPosition = new Vector3(Random.value * 8-4, 0.5f, Random.value * 8-4);// перемещаем объект в случайное место
+    }
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation(Target.localPosition); //добавляет в вектор наблюдения положение объекта
+        sensor.AddObservation(this.transform.localPosition); // добавляет в вектор наблюдения положение перемещенного объекта
+        sensor.AddObservation(rBody.velocity.x); // добавляет в вектор наблюдения координату x
+        sensor.AddObservation(rBody.velocity.z); // добавляет в вектор наблюдения координату y
+    }
+    public float forceMultiplier = 10; // создаем множитель силы
+    public override void OnActionReceived(ActionBuffers actionBuffers)
+    {
+        Vector3 controlSignal = Vector3.zero; // направление силы
+        controlSignal.x = actionBuffers.ContinuousActions[0]; // начало непрерывных действий по координате x
+        controlSignal.z = actionBuffers.ContinuousActions[1]; // начало непрерывных действий по координате y
+        rBody.AddForce(controlSignal * forceMultiplier); // примененяем физическую силу к объекту
+
+        float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition); // расстояние до куба
+
+        if(distanceToTarget < 1.42f) // если дистанция до объекта меньше 1.42, то
+        {
+            SetReward(1.0f); // изменяем вознаграждение за эпизод 
+            EndEpisode(); // заканчиваем эпизод
+        }
+        else if (this.transform.localPosition.y < 0)// если координата y объекта меньше 0, то
+        {
+            EndEpisode(); // заканчиваем эпизод
+        }
+    }
+}
+
+```py
 
 ## Задание 3
 ### Доработайте сцену и обучите ML-Agent таким образом, чтобы шар перемещался между двумя кубами разного цвета. Кубы должны, как и в первом задании, случайно изменять координаты на плоскости. В выводах к работе дайте развернутый ответ, что такое игровой баланс и как системы машинного обучения могут быть использованы для того, чтобы его скорректировать.
